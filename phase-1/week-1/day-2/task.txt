@@ -1,0 +1,80 @@
+# Tasks — Week 1 Day 2
+
+Solve these and verify with code files:
+
+## Task 1: Predict Output
+```javascript
+console.log(x);
+var x = 5;
+```
+**Answer:** undefined
+
+## Task 2: Predict Output
+```javascript
+console.log(y);
+let y = 10;
+```
+**Answer:** ReferenceError (TDZ)
+
+## Task 3: Predict Output
+```javascript
+function alpha() {
+  console.log(beta());
+  function beta() {
+    return "Hello";
+  }
+}
+alpha();
+```
+**Answer:** "Hello"
+
+## Task 4: Predict Output
+```javascript
+var a = 1;
+function outer() {
+  var a = 2;
+  function inner() {
+    console.log(a);
+  }
+  inner();
+}
+outer();
+```
+**Answer:** 2
+
+## Task 5: Draw Call Stack
+Draw the call stack diagram for:
+```javascript
+function first() {
+  second();
+  console.log("first");
+}
+function second() {
+  third();
+  console.log("second");
+}
+function third() {
+  console.log("third");
+}
+first();
+```
+
+**Answer:**
+```
+Output: third, second, first
+Stack: first → second → third → pop → pop → pop
+```
+
+## Task 6: Predict Function Hoisting
+```javascript
+console.log(foo());
+function foo() { return 5; }
+```
+**Answer:** 5
+
+## Task 7: Predict Function Expression
+```javascript
+console.log(bar());
+var bar = function() { return 10; }
+```
+**Answer:** TypeError: bar is not a function

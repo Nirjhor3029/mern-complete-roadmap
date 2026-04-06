@@ -1,0 +1,176 @@
+🔥 Excellent, আজ আমরা Week 1 Day 2 এ যাবো।
+
+Topic: Execution Context + Call Stack + Memory Creation Phase
+
+এটা একটু deep, কিন্তু senior JavaScript engineer-এর brain এখানেই তৈরি হয়।
+
+✅ Week 1 — Day 2
+🧠 Topic: Execution Context + Call Stack + Memory Phase
+🎯 Today’s Goal
+বুঝবে JS কীভাবে code run করে
+Memory allocation + variable environment বুঝবে
+Function execution flow পরিষ্কার হবে
+Interview traps clear হবে
+1) 🧠 Execution Context (EC)
+
+JavaScript যখন code execute করে, তখন প্রত্যেকটা function / global code জন্য একটা execution context তৈরি হয়।
+
+Global Execution Context (GEC) → পুরো program শুরু হওয়া
+Function Execution Context (FEC) → function call করলে
+Eval Execution Context → rare, eval block
+
+EC মানে = Environment + Scope + This + Variables
+
+2) ⚙️ Phases of Execution Context
+
+Execution context দুইটা phase-এ কাজ করে:
+
+1️⃣ Memory Creation Phase
+JS engine variable declarations এবং function declarations memory তে রাখে
+var → undefined
+let / const → Temporal Dead Zone (TDZ)
+function → fully hoisted
+function greet() {
+  console.log(message);
+  var message = "Hi!";
+}
+greet();
+
+Memory phase:
+
+message → undefined
+greet → function definition
+
+Output:
+
+undefined
+2️⃣ Code Execution Phase
+Engine line by line execute করে
+Assignments + function calls + expressions
+console.log(a);
+var a = 10;
+
+Memory Phase:
+
+a → undefined
+
+Execution Phase:
+
+console.log(a) → undefined
+a = 10
+3) 🧩 Call Stack
+JS single-threaded
+Call stack tracks execution contexts
+function first() {
+  console.log("first start");
+  second();
+  console.log("first end");
+}
+
+function second() {
+  console.log("second");
+}
+
+first();
+
+Call Stack Flow:
+
+GEC push → first()
+first() push → second()
+second() execute → pop
+first() continue → pop
+
+Output:
+
+first start
+second
+first end
+4) Memory + Stack Example
+var a = 10;
+
+function foo() {
+  var b = 20;
+  function bar() {
+    var c = 30;
+    console.log(a, b, c);
+  }
+  bar();
+}
+
+foo();
+
+Memory Allocation:
+
+Global → a = 10, foo = function
+foo EC → b = 20, bar = function
+bar EC → c = 30
+
+Output: 10 20 30
+
+Senior Tip:
+Closure concept directly এটাই understand করতে হবে.
+
+5) Interview Trap #1 — Hoisting + EC
+console.log(myFunc()); // ?
+function myFunc() { return 10; }
+
+Output: 10 ✅
+কারণ function declaration fully hoisted memory phase এ।
+
+console.log(myVar()); // ?
+var myVar = function() { return 10; }
+
+Output: ❌ Error, myVar is not a function
+কারণ myVar → undefined, assignment later.
+
+🧪 Practice Tasks (Mandatory)
+Predict output:
+console.log(x);
+var x = 5;
+Predict output:
+console.log(y);
+let y = 10;
+Predict output:
+function alpha() {
+  console.log(beta());
+  function beta() { return "Hello"; }
+}
+alpha();
+Predict output:
+var a = 1;
+function outer() {
+  var a = 2;
+  function inner() {
+    console.log(a);
+  }
+  inner();
+}
+outer();
+Call stack diagram আঁকো উপরের example দিয়ে।
+💼 Mini Project / Hands-on
+তৈরি করো execution-playground.js
+লিখো 10টি example: function nesting + memory phase + TDZ + call stack
+ব্যাখ্যা করো প্রত্যেকটা output এবং EC কীভাবে কাজ করছে
+🎤 Interview Questions
+Execution context কী?
+JS engine কিভাবে code execute করে?
+Memory phase vs Execution phase explain করো
+Call stack কীভাবে function calls track করে?
+Hoisting আর execution context সম্পর্ক?
+📚 Free Resources
+Video: “JavaScript Execution Context + Hoisting” – JavaScript Mastery / Fireship
+Docs:
+MDN → Execution context
+javascript.info → Hoisting + Scope
+YouTube: Akshay Saini / Fun Fun Function
+✅ Deliverable Before Day 3
+5 practice tasks solve
+10 EC + stack examples
+Call stack diagrams
+GitHub repo push → mern-engineer-journey/week1
+
+Tomorrow:
+
+🚀 Week 1 Day 3
+
+Closures + Lexical Scope + Advanced function patterns
