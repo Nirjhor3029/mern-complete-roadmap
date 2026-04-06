@@ -243,7 +243,7 @@ If this roadmap helps you, give it a ⭐ and share with others!
 
 ### 🚀 Start Your Journey Today!
 
-**Phase 1 → Week 1 → Day 1 → [Start Learning](.phase-1/week-1/day-1/)**
+**Phase 1 → Week 1 → Day 1 → [Start Learning](phase-1/week-1/day-1/)**
 
 ---
 
