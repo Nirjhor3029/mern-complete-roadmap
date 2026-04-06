@@ -1,0 +1,67 @@
+# Tasks — Week 1 Day 4
+
+Practice this binding:
+
+## Task 1: Predict Output
+```javascript
+console.log(this);
+function fn() { console.log(this); }
+fn();
+```
+**Answer:** First: global object, Second: undefined (strict) or global
+
+## Task 2: Predict Output
+```javascript
+const obj = { name: "A", getName: function() { return this.name; }};
+const f = obj.getName;
+console.log(f());
+```
+**Answer:** undefined (method extracted loses context)
+
+## Task 3: Fix with .bind()
+```javascript
+const obj = { name: "A", getName: function() { return this.name; }};
+const f = obj.getName;
+// Should print "A"
+```
+**Fix:** `const f = obj.getName.bind(obj);`
+
+## Task 4: Class with setTimeout
+```javascript
+class Counter {
+  constructor() { this.count = 0; }
+  increment() {
+    setTimeout(() => {
+      console.log(this.count); // Should print 1
+    }, 100);
+  }
+}
+const c = new Counter();
+c.increment();
+```
+**Answer:** Arrow function preserves this
+
+## Task 5: Bind/Call/Apply
+```javascript
+function greet(greeting) {
+  console.log(greeting + ", " + this.name);
+}
+const user = { name: "Nirjhor" };
+// Use call, apply, bind to greet
+```
+**Answers:**
+- `greet.call(user, "Hello")`
+- `greet.apply(user, ["Hello"])`
+- `const fn = greet.bind(user); fn("Hello");`
+
+## Task 6: Arrow vs Regular
+```javascript
+const obj = {
+  name: "Nirjhor",
+  arrow: () => console.log(this.name),
+  regular: function() { console.log(this.name); }
+};
+obj.arrow();   // ?
+obj.regular(); // ?
+```
+**Answer:** Arrow: undefined, Regular: "Nirjhor"

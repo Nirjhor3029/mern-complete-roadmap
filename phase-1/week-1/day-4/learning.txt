@@ -1,0 +1,137 @@
+🔥 Perfect! এখন আমরা Week 1 Day 4 এ পৌঁছেছি।
+
+Topic: this keyword + Bind / Call / Apply + Context Tricks
+
+এটা React, Node, OOP JS, event handlers সব জায়গায় must-know।
+
+✅ Week 1 — Day 4
+🧠 Topic: this + Bind / Call / Apply + Context Tricks
+🎯 Today’s Goal
+বুঝবে this কাকে refer করে
+Context পরিবর্তন কিভাবে করা যায়
+Arrow function + normal function difference
+React / Node practical bug prevent
+1) 🧠 this Explained
+
+this = current execution context object
+
+Rules of this
+Global context → Browser: window, Node: global
+Function call → undefined in strict mode, otherwise global object
+Method call → object owning method
+Constructor (new) → new instance object
+Arrow function → lexical this
+2) Function vs Method
+function sayHi() {
+  console.log(this);
+}
+
+sayHi(); // global / undefined (strict mode)
+
+const obj = { name: "Nirjhor", greet: sayHi };
+obj.greet(); // obj
+Function → default binding
+Method → object binding
+3) Constructor this
+function Person(name) {
+  this.name = name;
+}
+
+const p = new Person("Nirjhor");
+console.log(p.name); // "Nirjhor"
+new creates a new object
+this points to that object
+4) Arrow Function this
+Arrow function does not create its own this
+Lexical this → parent scope
+const obj = {
+  name: "Nirjhor",
+  greet: () => console.log(this.name)
+};
+obj.greet(); // undefined (arrow uses lexical `this` = global)
+
+Correct way:
+
+const obj = {
+  name: "Nirjhor",
+  greet() {
+    const inner = () => console.log(this.name);
+    inner();
+  }
+};
+obj.greet(); // "Nirjhor"
+5) Bind / Call / Apply
+5.1 .call(thisArg, arg1, arg2, …)
+function greet(greeting) {
+  console.log(`${greeting}, I am ${this.name}`);
+}
+const user = { name: "Nirjhor" };
+greet.call(user, "Hello"); // Hello, I am Nirjhor
+5.2 .apply(thisArg, [argsArray])
+greet.apply(user, ["Hi"]); // Hi, I am Nirjhor
+5.3 .bind(thisArg, arg1, …)
+const greetUser = greet.bind(user, "Hey");
+greetUser(); // Hey, I am Nirjhor
+.bind() → new function permanently bound
+6) Common JS / React Traps
+6.1 Event Handlers
+class Button {
+  constructor(name) { this.name = name; }
+  click() { console.log(this.name); }
+}
+
+const btn = new Button("Save");
+setTimeout(btn.click, 100); // undefined
+setTimeout(btn.click.bind(btn), 100); // Save
+6.2 Arrow inside Method
+const obj = {
+  name: "Nirjhor",
+  greet() {
+    setTimeout(() => console.log(this.name), 100);
+  }
+};
+obj.greet(); // Nirjhor
+🧪 Practice Tasks (Mandatory)
+Predict output:
+console.log(this);
+function fn() { console.log(this); }
+fn();
+Predict output:
+const obj = { name: "A", getName: function() { return this.name; }};
+const f = obj.getName;
+console.log(f());
+Fix above with .bind()
+Create counter class, use setTimeout inside method → print this.count
+💼 Mini Project (Day 4)
+
+Create file: this-bind-playground.js
+
+Implement:
+Method call + this
+Arrow vs normal function in object
+Bind / Call / Apply examples
+React-style async simulation with setTimeout
+
+Push → mern-engineer-journey/week1/day4
+
+🎤 Interview Questions
+this কী এবং কোন rules আছে?
+Arrow function this vs normal function this
+.call vs .apply vs .bind
+Event handler context problem explain করো
+Constructor function এ this behavior explain করো
+📚 Free Resources
+Video: “JavaScript this keyword deep dive” – Fireship / Traversy
+Docs: MDN → this
+javascript.info → this
+✅ Deliverable Before Day 5
+4 practice tasks complete
+10 this examples + bind/call/apply
+GitHub repo push
+Explain output + why this changes
+
+Tomorrow:
+
+🚀 Week 1 Day 5
+
+Prototypes + Prototype Chain + Inheritance
