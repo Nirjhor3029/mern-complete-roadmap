@@ -1,0 +1,45 @@
+# Tasks — Week 1 Day 1
+
+Solve these and verify with scope-playground.js:
+
+## Task 1: Predict Output
+```javascript
+console.log(a);
+var a = 5;
+```
+**Answer:** undefined
+
+## Task 2: Error or Output?
+```javascript
+{
+  let x = 10;
+}
+console.log(x);
+```
+**Answer:** ReferenceError
+
+## Task 3: What logs?
+```javascript
+const user = { name: "A" };
+user.name = "B";
+console.log(user);
+```
+**Answer:** { name: 'B' }
+
+## Task 4: Fix the Bug
+```javascript
+for (var i = 0; i < 5; i++) {
+  setTimeout(() => console.log(i), 0);
+}
+```
+**Fix:** Change `var` to `let`
+**Output:** 0, 1, 2, 3, 4
+
+## Task 5: Hoisting Prediction
+```javascript
+console.log(foo());
+function foo() {
+  return "hello";
+}
+```
+**Answer:** "hello"
