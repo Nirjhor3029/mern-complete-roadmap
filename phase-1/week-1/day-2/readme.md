@@ -62,7 +62,7 @@ first();
 
 ## ⏭️ Next: Day 3
 
-**Closures + Lexical Scope + Advanced function patterns**
+**[Closures + Lexical Scope + Advanced function patterns](../day-3/readme.md)**
 
 ---
 

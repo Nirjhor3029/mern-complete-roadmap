@@ -1,0 +1,178 @@
+Perfect! এখন আমরা Week 1 Day 3 এ যাবো।
+
+Topic: Closures + Lexical Scope + Advanced Function Patterns
+
+এটা JS engineer-এর জন্য একদম crucial।
+React, Node, async code, state management সব জায়গায় closures directly লাগে।
+
+✅ Week 1 — Day 3
+🧠 Topic: Closures + Lexical Scope
+🎯 Today’s Goal
+বুঝবে closure কী
+Lexical scope কীভাবে কাজ করে
+Function memory capture বুঝবে
+Advanced patterns (module pattern, private variables)
+React & Node async problem solving-ready
+1) 🧠 Lexical Scope
+
+JS uses lexical scoping → function কোথায় define হয়েছে সেটি ধরে।
+
+Execution location নয়, declaration location matter করে।
+function outer() {
+  let outerVar = "outer";
+
+  function inner() {
+    console.log(outerVar);
+  }
+
+  inner();
+}
+
+outer(); // Output: "outer"
+inner function outerVar কে access করতে পারছে।
+এটা হচ্ছে lexical scope.
+2) ⚡ Closures Explained
+
+Closure = function + lexical environment captured in memory
+
+Function return করলে বা variable হিসেবে assign করলে closure তৈরি হয়।
+function makeCounter() {
+  let count = 0;
+  return function() {
+    count++;
+    console.log(count);
+  }
+}
+
+const counter = makeCounter();
+counter(); // 1
+counter(); // 2
+counter(); // 3
+count variable private
+Direct access বাইরে থেকে সম্ভব নয়
+Senior-level JS trick: data encapsulation
+3) ✅ Practical Closure Patterns
+3.1 Private Variables
+function Person(name) {
+  let secret = "shh!";
+  this.name = name;
+
+  this.getSecret = function() {
+    return secret;
+  }
+}
+
+const p = new Person("Nirjhor");
+console.log(p.getSecret()); // "shh!"
+console.log(p.secret); // undefined
+3.2 Module Pattern
+const CounterModule = (function() {
+  let count = 0;
+
+  return {
+    increment: function() { count++; return count; },
+    decrement: function() { count--; return count; }
+  }
+})();
+
+console.log(CounterModule.increment()); // 1
+console.log(CounterModule.increment()); // 2
+Data encapsulated
+Popular in older JS code & Node modules
+3.3 Closures in Loops (Common Trap)
+for (var i = 0; i < 3; i++) {
+  setTimeout(function() {
+    console.log(i);
+  }, 100);
+}
+// Output: 3 3 3
+
+Fix with closure:
+
+for (var i = 0; i < 3; i++) {
+  (function(j) {
+    setTimeout(function() {
+      console.log(j);
+    }, 100);
+  })(i);
+}
+// Output: 0 1 2
+
+Fix with let:
+
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 100);
+}
+// Output: 0 1 2
+
+React & Node async code bug prevention directly apply হয়।
+
+4) 🔥 Advanced Function Patterns
+Currying
+function multiply(a) {
+  return function(b) {
+    return a * b;
+  }
+}
+const double = multiply(2);
+console.log(double(5)); // 10
+Partial Application
+function add(a, b, c) { return a + b + c; }
+const add5 = add.bind(null, 5);
+console.log(add5(3,2)); // 10
+Factory Functions
+function createUser(name) {
+  let role = "user";
+  return {
+    name,
+    getRole: () => role,
+    setRole: (r) => role = r
+  }
+}
+🧪 Practice Tasks (Mandatory)
+Create a counter closure with reset method.
+Make a private balance variable with deposit & withdraw methods.
+Predict output:
+function outer() {
+  let x = 10;
+  return function() {
+    console.log(x);
+  }
+}
+const fn = outer();
+x = 20;
+fn();
+Closure in loop: create 5 buttons dynamically, each alerts its index.
+💼 Mini Project (Day 3)
+
+Create file: closures-playground.js
+
+Implement:
+Private data module
+Counter module
+Currying example
+Loop closure example
+
+Push to GitHub → mern-engineer-journey/week1/day3
+
+🎤 Interview Questions
+Closure কী?
+Lexical scope কীভাবে work করে?
+Closure vs private variable?
+Currying কী এবং practical use?
+React state stale closure bug explain করো।
+📚 Free Resources
+Video: JavaScript Closures – Fun Fun Function / Traversy
+Docs: MDN → Closures
+javascript.info → Functions → Closures
+✅ Deliverable Before Day 4
+4 practice tasks complete
+10 closure examples
+GitHub repo updated
+Explain every output
+
+Tomorrow:
+
+🚀 Week 1 Day 4
+
+this keyword + Bind/Call/Apply + Context Tricks

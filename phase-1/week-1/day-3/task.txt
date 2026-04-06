@@ -1,0 +1,109 @@
+# Tasks — Week 1 Day 3
+
+Solve these to master closures:
+
+## Task 1: Counter with Reset
+```javascript
+function createCounter() {
+  // Create counter with:
+  // - increment(): increases by 1
+  // - decrement(): decreases by 1
+  // - reset(): sets count back to 0
+  // Return an object with these methods
+}
+
+const counter = createCounter();
+console.log(counter.increment()); // 1
+console.log(counter.increment()); // 2
+console.log(counter.reset());
+console.log(counter.increment()); // 1
+```
+**Answer:** Use closure to maintain count variable
+
+## Task 2: Private Balance
+```javascript
+function createAccount(initialBalance) {
+  // Private balance variable
+  // deposit(amount) - adds to balance
+  // withdraw(amount) - subtracts if sufficient balance
+  // getBalance() - returns current balance
+}
+
+const account = createAccount(100);
+console.log(account.deposit(50)); // 150
+console.log(account.withdraw(30)); // 120
+console.log(account.getBalance()); // 120
+// account.balance should be undefined!
+```
+**Answer:** Use closure for private variable
+
+## Task 3: Predict Output
+```javascript
+function outer() {
+  let x = 10;
+  return function() {
+    console.log(x);
+  };
+}
+const fn = outer();
+x = 20;
+fn();
+```
+**Answer:** 20 (reads current value of x when called)
+
+## Task 4: Loop Closure Fix
+```javascript
+// Fix this bug using both methods:
+// 1. Using let
+// 2. Using IIFE
+
+// Method 1 (let):
+for (let i = 0; i < 5; i++) {
+  setTimeout(() => console.log(i), 100);
+}
+
+// Method 2 (IIFE):
+for (var j = 0; j < 5; j++) {
+  // Your IIFE here
+}
+```
+**Answer:** 
+- let: Output 0,1,2,3,4
+- IIFE: Wrap in `(function(index){...})(j)`
+
+## Task 5: Currying
+```javascript
+function multiply(a) {
+  // Return a function that takes b and returns a * b
+}
+
+const double = multiply(2);
+const triple = multiply(3);
+
+console.log(double(5)); // 10
+console.log(triple(5)); // 15
+```
+**Answer:** Return `function(b) { return a * b; }`
+
+## Task 6: Module Pattern
+```javascript
+const ShoppingCart = (function() {
+  let items = [];
+  
+  // Return object with:
+  // - addItem(item)
+  // - removeItem(item)
+  // - getItems()
+  // - getTotal()
+})();
+```
+**Answer:** Use IIFE with return object containing methods
+
+## Task 7: Memoization
+```javascript
+function memoize(fn) {
+  // Create cache object
+  // Return function that checks cache before calling fn
+}
+```
+**Answer:** Store results in cache object with JSON stringified args as key
