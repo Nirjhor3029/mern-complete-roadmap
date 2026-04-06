@@ -17,12 +17,10 @@ node --version
 ### Run Single File
 ```bash
 # Terminal/Command Prompt খুলো
-cd E:\dev\learn\MERN-Engineer-Journey\phase-1\week-1\day-1\code
+cd <your-downloaded-path>/phase-1/week-1/day-1/code
 
-# Run a single file
+# Or navigate to code folder and run:
 node 1-scope/global-scope.js
-
-# Run another file
 node 2-variables/var-example.js
 ```
 
