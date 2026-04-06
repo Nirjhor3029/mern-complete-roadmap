@@ -200,7 +200,7 @@ Todo apps                       SaaS Products
 ## 📚 How to Use This Repository
 
 ```
-📁 week-X/day-Y/
+📁 phase-A/week-X/day-Y/
 ├── learning.txt    → Original content to learn
 ├── task.txt        → Practice tasks
 ├── learning.md     → Full educational material
@@ -243,7 +243,7 @@ If this roadmap helps you, give it a ⭐ and share with others!
 
 ### 🚀 Start Your Journey Today!
 
-**Week 1 → Day 1 → [Start Learning](./week-1/day-1/)**
+**Phase 1 → Week 1 → Day 1 → [Start Learning](.phase-1/week-1/day-1/)**
 
 ---
 
