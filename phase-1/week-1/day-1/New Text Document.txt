@@ -1,0 +1,237 @@
+🔥 Excellent. আজ থেকে officially তোমার MERN :: Engineer Journey শুরু.
+
+আজ আমরা করবো:
+
+✅ Week 1 — Day 1
+🧠 Topic: Scope + var / let / const + Hoisting
+
+এই day টা খুব basic মনে হলেও senior JavaScript interview-এর foundation এখান থেকেই শুরু।
+
+যদি এটা deep না বোঝো, পরে:
+
+closures
+async
+React state bugs
+stale data
+memory issues
+সব জায়গায় problem হবে.
+🎯 Today’s Goal
+
+আজকের শেষে তুমি explain করতে পারবে:
+
+scope কী
+JS variable কোথায় live করে
+var vs let vs const
+hoisting actually কী
+temporal dead zone
+interview trap questions
+1) 🧠 Scope = Variable কোথায় accessible
+
+Scope মানে variable কোথা থেকে access করা যাবে।
+
+JavaScript এ mainly 3 types:
+
+✅ Global Scope
+const appName = "MERN Journey";
+
+function show() {
+  console.log(appName);
+}
+
+সব জায়গা থেকে access করা যায়।
+
+✅ Function Scope
+function user() {
+  const name = "Nirjhor";
+  console.log(name);
+}
+
+name শুধু function এর ভিতরে।
+
+✅ Block Scope
+if (true) {
+  let age = 25;
+}
+
+age block এর বাইরে পাওয়া যাবে না।
+
+2) ⚔️ var vs let vs const
+✅ var
+if (true) {
+  var x = 10;
+}
+console.log(x); // 10
+
+var block scope মানে না ❌
+এটা function scoped.
+
+🚨 Why dangerous
+
+React loop / async code এ massive bugs দেয়.
+
+✅ let
+if (true) {
+  let y = 20;
+}
+console.log(y); // error
+
+Safer. block scoped.
+
+✅ const
+const z = 30;
+
+reassign করা যায় না.
+
+z = 40; // error
+
+But object mutate করা যায়:
+
+const user = { name: "A" };
+user.name = "B";
+3) 🚀 Hoisting
+
+JavaScript execution এর আগে memory phase-এ variable declarations তুলে নেয়।
+
+এই concept টা interview-এ খুব আসে.
+
+✅ Example 1
+console.log(a);
+var a = 10;
+
+Output:
+
+undefined
+
+Behind the scene:
+
+var a;
+console.log(a);
+a = 10;
+❗ let and const
+console.log(b);
+let b = 20;
+
+এখানে error হবে.
+
+কারণ Temporal Dead Zone (TDZ).
+
+⚠️ Temporal Dead Zone
+
+Declaration line এর আগে access করলে error.
+
+{
+  console.log(score); // error
+  let score = 100;
+}
+
+TDZ = memory-তে আছে but access blocked.
+
+এটা senior-level JS understanding.
+
+💣 Interview Trap #1
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 100);
+}
+
+Output?
+
+3
+3
+3
+
+কারণ var function scoped.
+
+✅ Fix with let
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 100);
+}
+
+Output:
+
+0
+1
+2
+
+এই concept React async bugs এ directly লাগে.
+
+🧪 Practice Tasks (Mandatory)
+
+আজ এগুলো নিজে করবে:
+
+✅ Task 1
+
+Predict output:
+
+console.log(a);
+var a = 5;
+✅ Task 2
+{
+  let x = 10;
+}
+console.log(x);
+✅ Task 3
+const user = { name: "A" };
+user.name = "B";
+console.log(user);
+✅ Task 4
+for (var i = 0; i < 5; i++) {
+  setTimeout(() => console.log(i), 0);
+}
+💼 Real Engineer Insight
+
+Production code rule:
+
+default → const
+if reassign লাগে → let
+avoid → var
+
+Senior engineers প্রায় never var use করে.
+
+🎯 Mini Project (Day 1)
+
+Create file: scope-playground.js
+
+Practice:
+
+global
+function
+block
+hoisting
+TDZ
+async loop trap
+
+নিজে 10টা example লিখবে.
+
+🎤 Interview Questions
+
+নিজেকে answer দাও:
+
+difference between lexical scope and block scope?
+why var causes async bugs?
+hoisting কি value hoist করে নাকি declaration?
+TDZ কেন useful?
+why const object mutation possible?
+📚 Best Free Resources
+🎥 Video
+JavaScript scope & hoisting → Akshay Saini (Namaste JS)
+Event loop prep later এই channel থেকে best
+📖 Docs
+MDN → Scope
+MDN → Hoisting
+javascript.info → Variables
+✅ Deliverable Before Day 2
+
+আজকের homework:
+
+10 examples
+4 practice task solve
+interview answers লিখে ফেলো
+GitHub repo খুলে push করো → mern-engineer-journey
+
+Tomorrow:
+
+🚀 Week 1 Day 2
+
+Execution Context + Call Stack + Memory Creation Phase
+
+এটা JS-এর brain 🧠
