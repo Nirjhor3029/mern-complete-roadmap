@@ -116,7 +116,7 @@ console.log(p.getSecret()); // "shh!"
 console.log(p.secret);      // undefined - can't access directly!
 ```
 
-### 3.2 Module Pattern (IIFE)
+### 3.2 Module Pattern (IIFE : Immediately Invoked Function Expression)
 
 ```javascript
 const CounterModule = (function() {

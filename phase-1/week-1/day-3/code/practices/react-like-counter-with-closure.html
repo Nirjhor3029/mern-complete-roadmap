@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>Counter: <span id="counter">0</span></h3>
+    <button class="click">Click</button>
+
+    <script>
+        function createUseState(initialValue) {
+            let state = initialValue;
+            function setState(newValue) {
+                state = newValue;
+            }
+            function getState() {
+                return state;
+            }
+            return [getState, setState];
+        }
+
+        const [count, setCount] = createUseState(0); // [getter, setter] destructuring as array [count, setCount]
+
+        document.querySelector(".click").addEventListener("click", function() {
+            setCount(count() + 1);
+            document.querySelector("#counter").innerHTML = count();
+        });
+
+        // console.log(count()); // 0
+        // setCount(5);
+        // console.log(count()); // 5
+    </script>
+</body>
+
+</html>
