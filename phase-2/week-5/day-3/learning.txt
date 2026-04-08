@@ -1,0 +1,196 @@
+Excellent 🚀 আজ আমরা React-এর সবচেয়ে practical topic এ যাচ্ছি।
+
+✅ Phase-2 / Week 5 / Day-3
+🧠 Topic: Handling Events + Event Binding + Passing Arguments
+
+আজকের topic না জানলে:
+
+button click
+form submit
+delete item
+modal open
+API call trigger
+dropdown
+কিছুই build করা যাবে না।
+🎯 Today’s Goal
+
+আজকের শেষে তুমি পারবে:
+
+React event handle করতে
+event handler function pass করতে
+arguments pass করতে
+inline function vs direct reference বুঝতে
+common performance mistakes avoid করতে
+1) ⚡ React Event Basics
+
+React events দেখতে HTML-এর মতো but internally SyntheticEvent use করে।
+
+function App() {
+  function handleClick() {
+    console.log("Button clicked");
+  }
+
+  return <button onClick={handleClick}>Click Me</button>;
+}
+✅ Important
+
+এখানে function call না, function reference pass করছি.
+
+✔️ correct:
+
+<button onClick={handleClick}>Click</button>
+
+❌ wrong:
+
+<button onClick={handleClick()}>Click</button>
+
+wrong দিলে render time-এ instantly execute হবে।
+
+2) 🧠 Inline Arrow Event
+
+Small logic হলে inline arrow useful।
+
+<button onClick={() => console.log("clicked")}>
+  Click
+</button>
+3) 🎯 Passing Arguments
+
+Real life এ খুব লাগে.
+
+Example:
+
+function App() {
+  function deleteUser(id) {
+    console.log("Delete user", id);
+  }
+
+  return <button onClick={() => deleteUser(101)}>Delete</button>;
+}
+4) 🧩 Event Object
+
+Browser event object React এ automatically আসে.
+
+function App() {
+  function handleClick(event) {
+    console.log(event);
+    console.log(event.target.innerText);
+  }
+
+  return <button onClick={handleClick}>Click Me</button>;
+}
+5) 🔥 Loop + Events (Very Common)
+const users = [
+  { id: 1, name: "Nirjhor" },
+  { id: 2, name: "Akash" }
+];
+
+function App() {
+  function showUser(id) {
+    console.log("Selected:", id);
+  }
+
+  return (
+    <div>
+      {users.map(user => (
+        <button key={user.id} onClick={() => showUser(user.id)}>
+          {user.name}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+এখানে JS closure concept directly use হচ্ছে 🔥
+
+তুমি JS Week-1 Day-3 এ closure শিখেছো — এটাই তার real React usage.
+
+6) ⚠️ Common Mistakes
+❌ Mistake 1: instantly calling
+<button onClick={deleteUser(5)}>
+✅ fix
+<button onClick={() => deleteUser(5)}>
+❌ Mistake 2: no key in loop
+
+already Day-2 এ cover হয়েছে.
+
+❌ Mistake 3: heavy inline functions everywhere
+<button onClick={() => bigCalculation()}>
+
+small হলে okay, big হলে function বাইরে রাখো.
+
+💼 Real Life Example
+🛒 Ecommerce Cart
+function Cart() {
+  function addToCart(productId) {
+    console.log("Added:", productId);
+  }
+
+  return (
+    <button onClick={() => addToCart(55)}>
+      Add to Cart
+    </button>
+  );
+}
+🧪 Practice Tasks (Mandatory)
+✅ Task 1
+
+button click → console Hello React
+
+✅ Task 2
+
+3 buttons বানাও:
+
+Edit 1
+Edit 2
+Edit 3
+
+click করলে respective id log হবে
+
+✅ Task 3
+
+list render করো and click করলে selected name দেখাও
+
+✅ Task 4
+
+event.target দিয়ে clicked text বের করো
+
+🎯 Mini Project (Day 3)
+
+File:
+phase2-week5-day3-events.jsx
+
+Build:
+
+✅ User Actions UI
+users list
+each user row:
+view button
+delete button
+click → user id log
+selected user name log
+event target text log
+
+GitHub push:
+phase2/week5/day3
+
+🎤 Interview Questions
+why onClick={fn} and not onClick={fn()}?
+how to pass params in event handler?
+what is SyntheticEvent?
+inline arrow function pros/cons?
+why closures matter in React loops?
+🧠 Engineer Insight
+
+আজকের সবচেয়ে important link:
+
+JS closure → React event handlers → dynamic UI actions
+
+এই connection বুঝলে React অনেক fun লাগবে.
+
+Tomorrow:
+
+🚀 Phase-2 / Week 5 / Day-4
+
+State with useState() + re-rendering + stale updates
+
+এটা React-এর heart ❤️

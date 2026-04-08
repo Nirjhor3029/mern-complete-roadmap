@@ -1,0 +1,223 @@
+🔥 Excellent. আজ থেকে তুমি React engineer mindset build করা শুরু করছো.
+
+আজকের topic senior React interviews-এ খুব common:
+
+“Where should state live?”
+
+এই question-এর answer-ই হচ্ছে আজকের lesson.
+
+✅ Phase-2 / Week 5 / Day-6
+🧠 Topic: Lifting State Up + Parent/Child Data Flow + Reusable Components
+🎯 Today’s Goal
+
+আজকের শেষে তুমি পারবে:
+
+child component থেকে parent control করতে
+shared state manage করতে
+prop drilling basic বুঝতে
+reusable input component বানাতে
+React architecture decision নিতে
+1) 🧠 Problem: duplicated state
+
+ধরো দুইটা input আছে:
+
+temperature in Celsius
+temperature in Fahrenheit
+
+যদি দুই child component নিজের নিজের state রাখে,
+তাহলে sync problem হবে ❌
+
+এই জন্য:
+
+shared data should move to common parent
+
+এটাই:
+
+lifting state up
+
+2) 🚀 Basic Example
+❌ Wrong
+function ChildA() {
+  const [value, setValue] = useState("");
+}
+function ChildB() {
+  const [value, setValue] = useState("");
+}
+
+এরা sync না.
+
+✅ Correct → Parent owns state
+import { useState } from "react";
+
+function Parent() {
+  const [name, setName] = useState("");
+
+  return (
+    <div>
+      <InputBox value={name} onChange={setName} />
+      <Preview value={name} />
+    </div>
+  );
+}
+3) 🧩 Child Receives Props
+function InputBox({ value, onChange }) {
+  return (
+    <input
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  );
+}
+
+Preview:
+
+function Preview({ value }) {
+  return <h2>Hello, {value}</h2>;
+}
+
+এখানে:
+
+state → parent
+UI → child
+update → child → parent → all children sync
+4) 🔄 Data Flow Rule
+
+React follows:
+
+one-way data flow
+
+Flow:
+
+Parent state
+↓
+props
+↓
+child UI
+↓
+callback event
+↓
+parent setter
+
+এইটা খুব important architecture rule.
+
+5) 🎯 Real Life Example
+🛒 Quantity Shared State
+function Cart() {
+  const [qty, setQty] = useState(1);
+
+  return (
+    <div>
+      <QuantityInput qty={qty} setQty={setQty} />
+      <PricePreview qty={qty} />
+    </div>
+  );
+}
+
+Child:
+
+function QuantityInput({ qty, setQty }) {
+  return (
+    <button onClick={() => setQty(qty + 1)}>
+      Increase
+    </button>
+  );
+}
+
+Preview:
+
+function PricePreview({ qty }) {
+  return <h3>Total: {qty * 100}</h3>;
+}
+
+এটা ecommerce cart-এর real architecture.
+
+6) 🧱 Reusable Component Pattern
+function TextInput({ label, value, onChange }) {
+  return (
+    <div>
+      <label>{label}</label>
+      <input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+Use:
+
+<TextInput
+  label="Name"
+  value={name}
+  onChange={setName}
+/>
+
+এটা real scalable UI pattern 🔥
+
+7) ⚠️ Common Mistakes
+❌ state duplicated in siblings
+
+same data multiple child-এ রাখো না.
+
+❌ child mutating props
+props.value = "abc";
+
+Never ❌
+
+props are readonly.
+
+🧪 Practice Tasks (Mandatory)
+✅ Task 1
+
+Parent state + input child + preview child
+
+✅ Task 2
+
+cart quantity + total price
+
+✅ Task 3
+
+profile form split into reusable input components
+
+✅ Task 4
+
+2 sibling components share same counter
+
+🎯 Mini Project (Day 6)
+
+File:
+phase2-week5-day6-lifting-state.jsx
+
+Build:
+
+✅ Shared Cart UI
+quantity buttons
+total price
+reusable input
+preview card
+all state in parent
+
+GitHub push:
+phase2/week5/day6
+
+🎤 Interview Questions
+what is lifting state up?
+when should state live in parent?
+why React one-way data flow important?
+prop drilling basic problem?
+reusable component design rules?
+🧠 Engineer Insight
+
+আজকের সবচেয়ে powerful rule:
+
+state should live where it’s used by the most components
+
+এই decision senior React architecture-এর base.
+
+Tomorrow:
+
+🚀 Phase-2 / Week 5 / Day-7
+
+Mini Project Week → Blog UI + State + Forms + Events + Components
+
+এখানে পুরো week apply করবো 🔥

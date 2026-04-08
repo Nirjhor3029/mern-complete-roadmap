@@ -1,0 +1,223 @@
+🔥 Awesome. আজ আমরা React-এর real app building zone এ ঢুকছি.
+
+Login form, search box, profile edit, filters, checkout — সব জায়গায় আজকের topic লাগবে.
+
+✅ Phase-2 / Week 5 / Day-5
+🧠 Topic: Forms + Controlled Components + Two-Way Binding
+🎯 Today’s Goal
+
+আজকের শেষে তুমি পারবে:
+
+input field state দিয়ে control করতে
+form submit handle করতে
+multiple inputs manage করতে
+reusable change handler বানাতে
+real login/search/profile form build করতে
+1) 🧠 Controlled Component কী?
+
+React-এ best practice হলো:
+
+UI input value = React state
+
+মানে input field-এর value React control করবে.
+
+import { useState } from "react";
+
+function App() {
+  const [name, setName] = useState("");
+
+  return (
+    <input
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+    />
+  );
+}
+
+এখানে:
+
+value={name} → input UI reads from state
+onChange → state updates from UI
+
+এটাই:
+
+two-way binding style data flow
+
+2) 🔁 Real Two-Way Flow
+
+Flow:
+
+user types → input changes
+onChange fires
+state updates
+component re-renders
+new value shows in input
+
+এটা বুঝতে পারলে forms super easy.
+
+3) ⚡ Live Preview Example
+function App() {
+  const [name, setName] = useState("");
+
+  return (
+    <div>
+      <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Type your name"
+      />
+
+      <h2>Hello, {name}</h2>
+    </div>
+  );
+}
+
+এইটা React-এর magic feeling দেয় ✨
+
+4) 🧾 Form Submit
+function LoginForm() {
+  const [email, setEmail] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log("Submitted:", email);
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <button type="submit">Login</button>
+    </form>
+  );
+}
+✅ Why preventDefault()
+
+না দিলে browser page reload করবে.
+
+5) 🧩 Multiple Inputs (Very Important)
+const [form, setForm] = useState({
+  name: "",
+  email: ""
+});
+
+Update:
+
+function handleChange(e) {
+  setForm({
+    ...form,
+    [e.target.name]: e.target.value
+  });
+}
+
+Use:
+
+<input
+  name="name"
+  value={form.name}
+  onChange={handleChange}
+/>
+
+<input
+  name="email"
+  value={form.email}
+  onChange={handleChange}
+/>
+
+এখানে JS dynamic object key ব্যবহার হচ্ছে 🔥
+
+6) 🛒 Real Life Example
+Search Filter
+function SearchBox() {
+  const [query, setQuery] = useState("");
+
+  return (
+    <div>
+      <input
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search products..."
+      />
+      <p>Searching for: {query}</p>
+    </div>
+  );
+}
+7) ⚠️ Common Mistakes
+❌ no value binding
+<input onChange={...} />
+
+এটা uncontrolled হয়ে যায়.
+
+❌ object overwrite bug
+setForm({
+  name: e.target.value
+});
+
+এতে email হারিয়ে যাবে ❌
+
+✅ fix
+setForm({
+  ...form,
+  name: e.target.value
+});
+🧪 Practice Tasks (Mandatory)
+✅ Task 1
+
+live name preview input
+
+✅ Task 2
+
+email login form submit
+
+✅ Task 3
+
+profile form:
+
+name
+email
+city
+✅ Task 4
+
+search input live preview
+
+🎯 Mini Project (Day 5)
+
+File:
+phase2-week5-day5-forms.jsx
+
+Build:
+
+✅ Profile Form
+name
+email
+city
+submit button
+preview card below form
+reusable handleChange
+
+GitHub push:
+phase2/week5/day5
+
+🎤 Interview Questions
+controlled vs uncontrolled component?
+why use preventDefault()?
+how handle multiple inputs?
+why spread operator needed?
+how build reusable forms?
+🧠 Engineer Insight
+
+আজকের সবচেয়ে important link:
+
+JS object spread + dynamic keys → React forms architecture
+
+এটা না বুঝলে complex forms painful হবে.
+
+Tomorrow:
+
+🚀 Phase-2 / Week 5 / Day-6
+
+Lifting State Up + Parent/Child Data Flow + Reusable Components
+
+এখানে component architecture শুরু 🔥

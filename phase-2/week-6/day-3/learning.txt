@@ -1,0 +1,193 @@
+🔥 Excellent. আজ আমরা React.memo এর missing half শিখবো.
+
+গতকাল useMemo দিয়ে value memoize করেছিলে.
+আজ useCallback দিয়ে function memoize করবো.
+
+এইটা না বুঝলে:
+
+memo child still re-renders 😵
+
+✅ Phase-2 / Week 6 / Day-3
+🧠 Topic: useCallback + Stable Function References + Memo Child Optimization
+🎯 Today’s Goal
+
+আজকের শেষে তুমি বুঝবে:
+
+function reference কেন change হয়
+React.memo কেন sometimes fail করে
+useCallback কী solve করে
+callback props optimization
+stale callback traps
+when NOT to use
+1) 🧠 The Problem
+function Parent() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    console.log("clicked");
+  }
+
+  return (
+    <>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <Child onClick={handleClick} />
+    </>
+  );
+}
+
+Child:
+
+const Child = React.memo(({ onClick }) => {
+  console.log("Child rendered");
+  return <button onClick={onClick}>Child Btn</button>;
+});
+❗ Problem
+
+Parent re-render হলে:
+
+function handleClick() {}
+
+new function reference create হয় every render 😵
+
+So memo child thinks:
+
+prop changed
+
+and re-renders ❌
+
+2) 🚀 useCallback
+import { useCallback } from "react";
+
+const handleClick = useCallback(() => {
+  console.log("clicked");
+}, []);
+
+Now:
+
+same function reference reused
+child memo works ✅
+3) 🧠 Mental Model
+useMemo
+
+caches value
+
+useCallback
+
+caches function
+
+Internally:
+
+useCallback(fn, deps)
+
+≈
+
+useMemo(() => fn, deps)
+4) 🛒 Real Ecommerce Example
+const handleAddToCart = useCallback((id) => {
+  setCart((prev) => [...prev, id]);
+}, []);
+
+Pass to memoized product cards:
+
+<ProductCard onAdd={handleAddToCart} />
+
+Now 100 product cards unnecessary re-render avoid হবে 🚀
+
+5) ⚠️ Dependency Trap
+const logCount = useCallback(() => {
+  console.log(count);
+}, []);
+
+❌ stale count
+
+Fix:
+
+const logCount = useCallback(() => {
+  console.log(count);
+}, [count]);
+6) 🔥 useCallback + React.memo
+
+Best combo:
+
+const Child = React.memo(({ onDelete }) => {
+  return <button onClick={onDelete}>Delete</button>;
+});
+
+Parent:
+
+const onDelete = useCallback(() => {
+  console.log("deleted");
+}, []);
+
+This is real-world optimization pattern.
+
+7) ⚠️ When NOT to use
+
+Don’t use everywhere ❌
+
+Bad:
+
+const sayHi = useCallback(() => console.log("hi"), []);
+
+small components এ unnecessary complexity.
+
+Use only when:
+
+callback props to memo child
+expensive child trees
+stable deps important
+🧪 Practice Tasks (Mandatory)
+✅ Task 1
+
+memo child + normal callback → observe re-render
+
+✅ Task 2
+
+fix with useCallback
+
+✅ Task 3
+
+todo delete callback optimize
+
+✅ Task 4
+
+stale dependency bug reproduce
+
+🎯 Mini Project (Day 3)
+
+File:
+phase2-week6-day3-usecallback.jsx
+
+Build:
+
+✅ Product Grid Optimization
+50 product cards
+memoized product card
+add to cart callback
+stable callback with useCallback
+unrelated counter state
+
+GitHub push:
+phase2/week6/day3
+
+🎤 Interview Questions
+why memo child still re-renders?
+what does useCallback cache?
+useMemo vs useCallback
+stale callback bug?
+when should you avoid it?
+🧠 Engineer Insight
+
+আজকের gold rule:
+
+memoize values with useMemo, functions with useCallback
+
+এইটা big React apps-এর optimization base.
+
+Tomorrow:
+
+🚀 Phase-2 / Week 6 / Day-4
+
+Code Splitting + lazy() + Suspense + route-level optimization
+
+এখানে production frontend engineering শুরু 🔥

@@ -1,0 +1,198 @@
+🔥 LET’S GO — আজ আমরা React-এর heart এ ঢুকবো.
+
+আজকের topic না বুঝলে React শুধু HTML templating মনে হবে.
+এইটা বুঝলে তুমি বুঝবে React actually “react” করে কেন.
+
+✅ Phase-2 / Week 5 / Day-4
+🧠 Topic: useState() + Re-rendering + Stale Updates
+🎯 Today’s Goal
+
+আজকের শেষে তুমি বুঝবে:
+
+state কী
+কেন normal variable UI update করে না
+useState() কীভাবে কাজ করে
+re-render cycle
+stale closure / stale state bug
+functional update pattern
+1) 🧠 Why normal variable fails
+function Counter() {
+  let count = 0;
+
+  function increment() {
+    count++;
+    console.log(count);
+  }
+
+  return <button onClick={increment}>Count: {count}</button>;
+}
+❌ Problem
+
+button click করলে console এ count বাড়বে,
+কিন্তু UI update হবে না.
+
+কারণ:
+
+React শুধু state change detect করলে re-render করে
+
+normal variable track করে না.
+
+2) ⚛️ useState() Basic
+import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  function increment() {
+    setCount(count + 1);
+  }
+
+  return <button onClick={increment}>Count: {count}</button>;
+}
+✅ Breakdown
+const [count, setCount] = useState(0);
+count → current state value
+setCount → updater function
+0 → initial value
+3) 🔁 Re-render Flow
+
+When:
+
+setCount(count + 1);
+
+React does:
+
+update state
+schedule re-render
+call component function again
+update UI
+
+এই জন্য function component বারবার re-run হয়.
+
+এখানে JS execution context knowledge directly লাগে.
+
+4) ⚠️ Async / Stale Update Bug
+
+এইটা senior-level important.
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  function incrementTwice() {
+    setCount(count + 1);
+    setCount(count + 1);
+  }
+
+  return <button onClick={incrementTwice}>{count}</button>;
+}
+❓ Output?
+
+only +1 😮
+
+কারণ দুইবারই same old count capture করেছে.
+
+এটা হচ্ছে:
+
+stale closure / stale state
+
+JS closure Day-3 এর real React use 🔥
+
+5) ✅ Functional Update Fix
+setCount(prev => prev + 1);
+setCount(prev => prev + 1);
+
+Full:
+
+function incrementTwice() {
+  setCount(prev => prev + 1);
+  setCount(prev => prev + 1);
+}
+
+এখন output হবে +2 ✅
+
+কারণ React latest state pass করে.
+
+6) 🛒 Real Life Example
+Quantity Button
+function Product() {
+  const [qty, setQty] = useState(1);
+
+  return (
+    <div>
+      <button onClick={() => setQty(qty - 1)}>-</button>
+      <span>{qty}</span>
+      <button onClick={() => setQty(qty + 1)}>+</button>
+    </div>
+  );
+}
+7) 🎯 State with Objects
+const [user, setUser] = useState({
+  name: "Nirjhor",
+  age: 22
+});
+
+Update:
+
+setUser({
+  ...user,
+  age: user.age + 1
+});
+
+এখানে JS spread operator direct লাগছে.
+
+🧪 Practice Tasks (Mandatory)
+✅ Task 1
+
+simple counter
+
+✅ Task 2
+
+double increment button (+2)
+
+✅ Task 3
+
+quantity selector
+
+✅ Task 4
+
+user age increment object state
+
+🎯 Mini Project (Day 4)
+
+File:
+phase2-week5-day4-state.jsx
+
+Build:
+
+✅ Counter Dashboard
+count
+increment
+decrement
++2 button
+reset
+user profile age increment
+
+GitHub push:
+phase2/week5/day4
+
+🎤 Interview Questions
+why normal variable doesn’t re-render?
+useState internally returns what?
+why stale state happens?
+when use functional updates?
+object state update best practice?
+🧠 Engineer Insight
+
+আজকের সবচেয়ে powerful connection:
+
+JS closures → stale React state bug
+
+এইটা বুঝলে hooks অনেক easy হবে later.
+
+Tomorrow:
+
+🚀 Phase-2 / Week 5 / Day-5
+
+Forms + Controlled Components + Two-way Binding
+
+এটা real-world app এর must-have.

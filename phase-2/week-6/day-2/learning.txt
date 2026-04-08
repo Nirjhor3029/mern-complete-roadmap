@@ -1,0 +1,178 @@
+🔥 Excellent. আজ আমরা React performance-এর সবচেয়ে practical hook শিখবো.
+
+এইটা না জানলে:
+
+filter lag করবে
+search slow হবে
+dashboard freeze করবে
+expensive calculations বারবার run হবে
+
+আজকের hero:
+
+🧠 useMemo
+✅ Phase-2 / Week 6 / Day-2
+🧠 Topic: useMemo + Expensive Calculation Optimization
+🎯 Today’s Goal
+
+আজকের শেষে তুমি বুঝবে:
+
+useMemo কী
+কেন লাগে
+expensive calculation optimize
+derived state caching
+memoization vs recomputation
+common mistakes
+1) 🧠 Problem: recalculation on every render
+function App() {
+  const [count, setCount] = useState(0);
+
+  const total = heavyCalculation();
+
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      {count}
+    </button>
+  );
+}
+❌ Problem
+
+Button click করলে:
+
+state update
+component re-render
+heavyCalculation() আবার run 😵
+
+Even if calculation count-এর সাথে related না.
+
+2) 🚀 useMemo
+import { useMemo } from "react";
+
+const total = useMemo(() => {
+  return heavyCalculation();
+}, []);
+✅ Meaning
+first render → run
+later renders → cached result
+dependency change না হলে rerun না
+3) 🧠 Real Example
+function App() {
+  const [count, setCount] = useState(0);
+  const [price] = useState(100);
+
+  const total = useMemo(() => {
+    console.log("calculating...");
+    return price * 1000;
+  }, [price]);
+
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Count: {count} | Total: {total}
+    </button>
+  );
+}
+
+👉 count change হলে:
+
+component re-render
+total recalculated হবে না ✅
+4) 🛒 Ecommerce Real Use
+const filteredProducts = useMemo(() => {
+  return products.filter((p) =>
+    p.name.toLowerCase().includes(query.toLowerCase())
+  );
+}, [products, query]);
+✅ Why powerful
+
+large product list হলে every keystroke lag কমায়.
+
+5) 📊 Dashboard Real Use
+const chartData = useMemo(() => {
+  return orders.reduce((sum, order) => sum + order.total, 0);
+}, [orders]);
+
+analytics dashboard এ huge.
+
+6) ⚠️ Common Mistakes
+❌ using for everything
+const name = useMemo(() => "Nirjhor", []);
+
+useless ❌
+
+❌ missing dependencies
+useMemo(() => filter(query), []);
+
+query change হলেও stale result ❌
+
+7) 🧠 When to use
+
+Use only when:
+
+expensive loop
+filter/map/reduce large arrays
+derived dashboard data
+heavy object generation
+stable props for memo children
+8) 🔥 React.memo + useMemo
+
+super combo:
+
+const users = useMemo(() => generateUsers(), []);
+return <UserList users={users} />;
+
+memo child + stable prop reference = max optimization 🚀
+
+🧪 Practice Tasks (Mandatory)
+✅ Task 1
+
+heavy multiply function optimize
+
+✅ Task 2
+
+product search filter
+
+✅ Task 3
+
+order total reduce
+
+✅ Task 4
+
+test without memo vs with memo logs
+
+🎯 Mini Project (Day 2)
+
+File:
+phase2-week6-day2-usememo.jsx
+
+Build:
+
+✅ Product Search Dashboard
+search input
+100 fake products
+memoized filter
+count button unrelated
+no lag on count click
+
+GitHub push:
+phase2/week6/day2
+
+🎤 Interview Questions
+what problem does useMemo solve?
+when should you avoid it?
+dependency array importance?
+useMemo vs normal variable?
+how use with React.memo?
+🧠 Engineer Insight
+
+আজকের powerful rule:
+
+cache derived data, not source state
+
+এইটা dashboard / analytics apps এ gold rule.
+
+Tomorrow:
+
+🚀 Phase-2 / Week 6 / Day-3
+
+useCallback + stable function references + memo child optimization
+
+এখানে তোমার performance understanding আরও deep হবে 🔥

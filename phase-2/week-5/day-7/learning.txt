@@ -1,0 +1,207 @@
+🔥 LET’S BUILD. আজ Week 5 Project Day — এই 7 days-এর সব concept একসাথে লাগবে.
+
+আজ শুধু concept না, real mini app architecture thinking করবো.
+
+✅ Phase-2 / Week 5 / Day-7
+🧠 Weekly Mini Project: Blog UI + Components + State + Forms + Events
+
+আজকের goal:
+
+পুরো Week 5 এর React fundamentals একটা real mini product এ apply করা
+
+Covered concepts:
+
+JSX
+components
+props
+lists + keys
+events
+useState
+forms
+lifting state up
+parent/child flow
+🎯 Project: Mini Blog Dashboard
+
+আমরা build করবো:
+
+🧱 Features
+✅ Blog Post List
+post title
+author
+likes
+delete button
+✅ Add Post Form
+title
+author
+submit
+✅ Live Preview
+
+selected post details
+
+✅ Like Button
+
+likes increment
+
+✅ Search Input
+
+filter posts by title
+
+🏗️ Suggested Component Architecture
+App
+├── SearchBar
+├── AddPostForm
+├── PostList
+│   └── PostCard
+└── SelectedPostPreview
+📦 Starter Data
+const initialPosts = [
+  { id: 1, title: "React Basics", author: "Nirjhor", likes: 0 },
+  { id: 2, title: "JS Closures", author: "Akash", likes: 2 }
+];
+🧠 Main App State
+const [posts, setPosts] = useState(initialPosts);
+const [query, setQuery] = useState("");
+const [selectedPost, setSelectedPost] = useState(null);
+
+সব shared state App এ থাকবে 🔥
+এটাই lifting state up real use.
+
+1) 🔍 SearchBar
+function SearchBar({ query, setQuery }) {
+  return (
+    <input
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      placeholder="Search posts..."
+    />
+  );
+}
+2) ➕ Add Post Form
+function AddPostForm({ onAdd }) {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    onAdd({
+      id: Date.now(),
+      title,
+      author,
+      likes: 0
+    });
+
+    setTitle("");
+    setAuthor("");
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input value={title} onChange={(e) => setTitle(e.target.value)} />
+      <input value={author} onChange={(e) => setAuthor(e.target.value)} />
+      <button>Add Post</button>
+    </form>
+  );
+}
+3) ❤️ PostCard
+function PostCard({ post, onLike, onDelete, onSelect }) {
+  return (
+    <div>
+      <h3 onClick={() => onSelect(post)}>{post.title}</h3>
+      <p>{post.author}</p>
+      <p>Likes: {post.likes}</p>
+
+      <button onClick={() => onLike(post.id)}>Like</button>
+      <button onClick={() => onDelete(post.id)}>Delete</button>
+    </div>
+  );
+}
+4) 📋 PostList
+function PostList({ posts, onLike, onDelete, onSelect }) {
+  return (
+    <div>
+      {posts.map((post) => (
+        <PostCard
+          key={post.id}
+          post={post}
+          onLike={onLike}
+          onDelete={onDelete}
+          onSelect={onSelect}
+        />
+      ))}
+    </div>
+  );
+}
+5) 👀 Selected Preview
+function SelectedPostPreview({ post }) {
+  if (!post) return <p>Select a post</p>;
+
+  return (
+    <div>
+      <h2>{post.title}</h2>
+      <p>Author: {post.author}</p>
+      <p>Likes: {post.likes}</p>
+    </div>
+  );
+}
+6) 🧠 App Logic
+➕ add
+function handleAdd(post) {
+  setPosts((prev) => [...prev, post]);
+}
+❤️ like
+function handleLike(id) {
+  setPosts((prev) =>
+    prev.map((post) =>
+      post.id === id
+        ? { ...post, likes: post.likes + 1 }
+        : post
+    )
+  );
+}
+❌ delete
+function handleDelete(id) {
+  setPosts((prev) => prev.filter((post) => post.id !== id));
+}
+🔍 filter
+const filteredPosts = posts.filter((post) =>
+  post.title.toLowerCase().includes(query.toLowerCase())
+);
+🎯 Your Task
+
+আজ এটা নিজে build করবে from scratch.
+
+✅ Must Have
+reusable components
+parent state
+form submit
+search
+like
+delete
+selected preview
+💼 GitHub Deliverable
+
+Push:
+
+phase2/week5/day7-blog-dashboard
+🎤 Interview Questions
+why all state App component এ?
+why functional updates used in like/add?
+why keys matter here?
+how search filtering works?
+where can this app be optimized later?
+🧠 Engineer Mindset
+
+আজকের সবচেয়ে important lesson:
+
+Components split by responsibility,
+state centralized by ownership
+
+এই architecture sense তোমাকে React engineer বানাবে.
+
+🚀 NEXT WEEK PREVIEW
+Phase-2 / Week 6
+
+Advanced React + performance + memoization + rendering optimization
+
+এখানে তুমি mid-level zone-এ ঢুকবে 🔥

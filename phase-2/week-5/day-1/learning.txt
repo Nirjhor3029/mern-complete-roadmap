@@ -1,0 +1,98 @@
+Perfect! 🚀 তুমি এখন Phase-2 / Week 5 / Day-1 এ চলে এসেছো।
+
+Phase-2 = React Frontend Deep Dive, Week 5 = “starting React seriously”, Day-1 = React Basics + JSX + Components
+
+✅ Phase-2 / Week 5 / Day-1
+🧠 Topic: React Basics + JSX + Functional Components
+🎯 Today’s Goal
+বুঝবে React কি এবং কেন ব্যবহার হয়
+JSX syntax clear হবে
+Functional components তৈরি এবং ব্যবহার করতে পারবে
+Props basic understanding
+JS + React connection বোঝা
+1) 🧠 What is React?
+React = UI library (not full framework)
+Purpose: build reusable, interactive UI
+Component-based
+Data-driven → state + props
+Virtual DOM → fast updates
+
+Key Idea:
+
+React uses JS + HTML in JSX + state + props → efficient rendering
+
+2) ⚡ JSX Explained
+
+JSX = JavaScript XML → HTML-like syntax inside JS
+
+const element = <h1>Hello, Nirjhor!</h1>;
+
+Rules:
+
+Must return single parent element
+Use {} for JS expressions
+className instead of class
+Inline styles → object {}
+
+Example:
+
+const style = { color: "blue", fontSize: "20px" };
+const element = <h1 style={style}>Hello, JS + React!</h1>;
+3) ⚡ Functional Components
+Function returns JSX
+Simple, reusable
+Recommended over class components (modern React)
+function Welcome(props) {
+  return <h2>Hello, {props.name}!</h2>;
+}
+
+ReactDOM.render(<Welcome name="Nirjhor" />, document.getElementById("root"));
+props = input to component
+ReactDOM.render → renders in browser
+4) 🔄 Components Composition
+
+Components can contain other components:
+
+function App() {
+  return (
+    <div>
+      <Welcome name="Nirjhor" />
+      <Welcome name="Akash" />
+    </div>
+  );
+}
+App = parent component
+Welcome = child component
+Props pass data
+5) 🧪 Practice Tasks (Mandatory)
+Create Greeting component → takes name and shows message
+Create Profile component → takes age and city as props
+Nest 2-3 components in App
+Try JSX expression: {2 + 3}, {new Date().getFullYear()}
+💼 Mini Project (Day 1)
+
+File: phase2-week5-day1.js
+
+Build App → 3 functional components: Greeting, Profile, Footer
+Pass props to each component
+Render all in browser
+🎤 Interview Questions
+React কি? Why use it over vanilla JS?
+JSX কী এবং কেন লাগে?
+Functional components vs class components
+Props কী? State vs Props
+ReactDOM.render() কেন লাগে?
+📚 Free Resources
+Docs: React Official Docs – Main Concepts
+Video: “React Basics” – Traversy / Fireship
+Interactive: CodeSandbox / StackBlitz
+✅ Deliverable Before Day 2
+4 practice tasks solve
+Mini project complete
+GitHub push → phase2/week5/day1
+
+Tomorrow:
+
+🚀 Phase-2 / Week 5 / Day-2
+
+JSX Advanced + Conditional Rendering + Lists & Keys

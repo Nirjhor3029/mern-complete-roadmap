@@ -1,0 +1,171 @@
+🔥 Great — আজ আমরা production-level frontend optimization শুরু করছি।
+
+আজকের topic না জানলে:
+
+app slow load হবে
+bundle size huge হবে
+user experience drop করবে
+✅ Phase-2 / Week 6 / Day-4
+🧠 Topic: Code Splitting + lazy() + Suspense
+🎯 Today’s Goal
+
+আজকের শেষে তুমি বুঝবে:
+
+bundle size কী এবং কেন problem
+code splitting কী
+React.lazy() দিয়ে component lazy load
+Suspense দিয়ে loading fallback
+route-level optimization mindset
+1️⃣ 🧠 Problem: Big Bundle
+
+React app build হলে:
+
+সব JS একসাথে bundle হয়
+user প্রথম load-এ সব download করে
+
+👉 Problem:
+
+slow internet → slow app
+unused code load → waste
+2️⃣ 🚀 Code Splitting
+
+Solution:
+
+split code → load only when needed
+
+Instead of:
+
+load everything upfront ❌
+Use:
+load per page / per feature ✅
+3️⃣ ⚡ React.lazy()
+import React, { lazy } from "react";
+
+const Dashboard = lazy(() => import("./Dashboard"));
+
+👉 Dashboard component only load হবে when used.
+
+4️⃣ 🧩 Suspense
+import { Suspense } from "react";
+
+function App() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <Dashboard />
+    </Suspense>
+  );
+}
+fallback → loading UI
+component load হলে replace হবে
+5️⃣ 🔄 Full Example
+import React, { lazy, Suspense, useState } from "react";
+
+const Profile = lazy(() => import("./Profile"));
+
+function App() {
+  const [show, setShow] = useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setShow(true)}>Load Profile</button>
+
+      <Suspense fallback={<p>Loading profile...</p>}>
+        {show && <Profile />}
+      </Suspense>
+    </div>
+  );
+}
+
+👉 Button click → component load → UX fast 🚀
+
+6️⃣ 🛣️ Route-level Code Splitting
+
+Real apps এ use হয়:
+
+const Home = lazy(() => import("./pages/Home"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Settings = lazy(() => import("./pages/Settings"));
+
+Only current page load হয় → huge performance boost.
+
+7️⃣ ⚠️ Common Mistakes
+❌ No Suspense
+const Comp = lazy(() => import("./Comp"));
+return <Comp />; // crash ❌
+✅ fix
+
+always wrap with Suspense
+
+❌ Over splitting
+
+small components split করলে overhead বাড়ে
+
+8️⃣ 🧠 Engineer Insight
+
+Use lazy when:
+
+page-level components
+heavy components (charts, editors)
+admin dashboard
+rarely used features
+9️⃣ 🛒 Real Example
+const AdminPanel = lazy(() => import("./AdminPanel"));
+
+User normal browsing করলে:
+👉 AdminPanel load হয় না
+👉 bundle small থাকে
+
+🧪 Practice Tasks (Mandatory)
+✅ Task 1
+
+lazy load one component
+
+✅ Task 2
+
+add button → load component on click
+
+✅ Task 3
+
+add loading fallback UI
+
+✅ Task 4
+
+create 2 pages simulate route split
+
+🎯 Mini Project (Day 4)
+
+File:
+phase2-week6-day4-lazy.jsx
+
+Build:
+
+✅ Lazy Dashboard
+Home always loaded
+Dashboard lazy loaded
+button to toggle
+loading UI
+
+GitHub push:
+phase2/week6/day4
+
+🎤 Interview Questions
+what is code splitting?
+why lazy loading needed?
+difference between eager vs lazy load
+what is Suspense?
+when NOT to use lazy?
+🧠 Engineer Mindset
+
+আজকের rule:
+
+Don’t load what user doesn’t need yet
+
+এইটা frontend performance-এর golden principle.
+
+Tomorrow:
+
+🚀 Phase-2 / Week 6 / Day-5
+
+Error Boundaries + Handling UI Failures
+
+এখানে production stability শুরু 🔥

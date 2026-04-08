@@ -1,0 +1,110 @@
+Perfect! 🚀 চল Phase-2 / Week 5 / Day-2 শুরু করি।
+
+Topic: JSX Advanced + Conditional Rendering + Lists & Keys
+
+এটা React এ খুব গুরুত্বপূর্ণ কারণ dynamic UI build করার জন্য এগুলো না জানা মানে practical development impossible।
+
+✅ Phase-2 / Week 5 / Day-2
+🧠 Topic: JSX Advanced + Conditional Rendering + Lists & Keys
+🎯 Today’s Goal
+JSX এর advanced features বুঝবে
+Conditional rendering শিখবে
+Array rendering + keys ঠিকভাবে ব্যবহার শিখবে
+React dynamic UI এর base prepare করবে
+1️⃣ Advanced JSX
+JSX = HTML inside JS, কিন্তু expressions + logic allowed {}
+JS expressions only, statements not allowed
+const user = { name: "Nirjhor", age: 21 };
+const element = <h1>Hello, {user.name}, you are {user.age} years old!</h1>;
+Function calls inside JSX allowed:
+function formatName(user) {
+  return user.name.toUpperCase();
+}
+
+const element = <h2>Hello, {formatName(user)}!</h2>;
+2️⃣ Conditional Rendering
+2.1 Ternary Operator
+const isLoggedIn = true;
+
+const element = (
+  <div>
+    {isLoggedIn ? <h1>Welcome back!</h1> : <h1>Please sign in.</h1>}
+  </div>
+);
+2.2 Logical AND (&&)
+const showMessage = true;
+
+const element = (
+  <div>
+    {showMessage && <p>This is a message</p>}
+  </div>
+);
+2.3 Function-based conditional
+function Greeting({ isLoggedIn }) {
+  if (isLoggedIn) {
+    return <h1>Welcome!</h1>;
+  }
+  return <h1>Please sign in.</h1>;
+}
+3️⃣ Rendering Lists & Keys
+React এর virtual DOM efficiently update করতে key attribute লাগে
+const numbers = [1, 2, 3, 4, 5];
+
+const listItems = numbers.map((num) => <li key={num}>{num}</li>);
+
+function NumberList() {
+  return <ul>{listItems}</ul>;
+}
+Key = unique, stable identifier
+Index as key → last resort only
+const users = [
+  { id: 101, name: "Nirjhor" },
+  { id: 102, name: "Akash" },
+];
+
+const userList = users.map(user => <li key={user.id}>{user.name}</li>);
+4️⃣ Combining Conditional + Lists
+const todos = [
+  { id: 1, text: "Learn React", done: true },
+  { id: 2, text: "Practice JS", done: false }
+];
+
+const todoList = todos.map(todo => (
+  <li key={todo.id}>
+    {todo.done ? <s>{todo.text}</s> : todo.text}
+  </li>
+));
+🧪 Practice Tasks (Mandatory)
+Create UserList component → array of objects, render name + age
+Add conditional: highlight users older than 25
+Render messages dynamically using ternary + AND operators
+Try nested lists: groups → users inside
+💼 Mini Project (Day 2)
+
+File: phase2-week5-day2.js
+
+Components:
+UserList → array + keys
+TodoList → conditional strike-through done tasks
+Use ternary + && for conditions
+Push to GitHub → phase2/week5/day2
+🎤 Interview Questions
+JSX কি? কোন limitations আছে?
+Conditional rendering 3 ways explain করো
+Why keys are needed in lists?
+What happens if key is missing?
+Best practice for dynamic lists + conditional UI
+📚 Free Resources
+Docs: React – Lists & Keys
+Video: Traversy / Fireship – “React Lists + Conditional Rendering”
+CodeSandbox → practice mapping arrays
+✅ Deliverable Before Day 3
+4 practice tasks complete
+Mini project complete
+GitHub push → phase2/week5/day2
+
+Tomorrow:
+
+🚀 Phase-2 / Week 5 / Day-3
+
+Handling Events + Event Binding + Passing Arguments

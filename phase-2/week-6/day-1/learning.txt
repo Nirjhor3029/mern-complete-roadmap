@@ -1,0 +1,164 @@
+🔥 Welcome to Week 6 — Advanced React Zone
+
+এখান থেকে তুমি “React developer” না, React engineer mindset build করবে.
+আজকের topic performance-এর base.
+
+✅ Phase-2 / Week 6 / Day-1
+🧠 Topic: Re-rendering Deep Dive + React.memo
+🎯 Today’s Goal
+
+আজকের শেষে তুমি বুঝবে:
+
+React re-render actually কীভাবে হয়
+unnecessary re-render কী
+parent → child re-render chain
+React.memo কীভাবে optimize করে
+performance thinking শুরু
+1️⃣ 🧠 React Re-render — Reality
+
+React component re-render হয় যখন:
+
+state change
+props change
+parent re-render
+Example
+function Parent() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <Child />
+    </div>
+  );
+}
+
+function Child() {
+  console.log("Child rendered");
+  return <h2>I am child</h2>;
+}
+
+👉 Button click করলে:
+
+Parent re-render
+Child also re-render ❗
+
+Even though child has no relation with count.
+
+⚠️ Problem
+
+Unnecessary re-render = performance waste
+Large apps এ এটা huge issue.
+
+2️⃣ 🔍 Why Child Re-render?
+
+React by default:
+
+parent re-render → all children re-render
+
+কারণ React doesn't know child needs update or not.
+
+3️⃣ 🚀 React.memo
+
+Solution:
+
+import React from "react";
+
+const Child = React.memo(function Child() {
+  console.log("Child rendered");
+  return <h2>I am child</h2>;
+});
+
+Now:
+👉 Parent re-render হলেও child re-render হবে না (if props unchanged)
+
+4️⃣ 🧠 How React.memo Works
+shallow compare props
+props same → skip render
+props changed → re-render
+5️⃣ 🧩 With Props Example
+const Child = React.memo(function Child({ name }) {
+  console.log("Child rendered");
+  return <h2>{name}</h2>;
+});
+
+Parent:
+
+<Child name="Nirjhor" />
+
+👉 static prop → no re-render
+
+6️⃣ ⚠️ Common Mistake
+<Child name={{ value: "Nirjhor" }} />
+
+এটা object → new reference every render ❌
+so memo fail করবে.
+
+7️⃣ 🧠 Real Engineer Insight
+
+React.memo use করো when:
+
+✔ heavy component
+✔ expensive rendering
+✔ stable props
+
+❌ small components → unnecessary complexity
+
+8️⃣ 🛒 Real Example
+Product Card
+const ProductCard = React.memo(({ product }) => {
+  console.log("Rendering:", product.name);
+  return <div>{product.name}</div>;
+});
+
+এটা ecommerce app এ huge performance gain দেয়.
+
+🧪 Practice Tasks (Mandatory)
+✅ Task 1
+
+Parent + Child → console log → observe re-render
+
+✅ Task 2
+
+wrap child with React.memo → test again
+
+✅ Task 3
+
+pass primitive prop → test
+
+❌ Task 4
+
+pass object prop → observe memo fail
+
+🎯 Mini Exercise
+
+Build:
+
+counter parent
+2 children
+one memo
+one non-memo
+
+observe difference 🔥
+
+🎤 Interview Questions
+what triggers re-render in React?
+why child re-renders on parent update?
+what is React.memo?
+shallow comparison কী?
+when NOT to use memo?
+🧠 Engineer Insight
+
+আজকের core lesson:
+
+React renders by default, optimizes manually
+
+তুমি এখন optimization-aware হচ্ছো.
+
+Tomorrow:
+
+🚀 Phase-2 / Week 6 / Day-2
+
+useMemo + expensive calculation optimization
+
+এটা performance game changer 🔥

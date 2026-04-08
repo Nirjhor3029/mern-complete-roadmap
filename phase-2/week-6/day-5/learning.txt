@@ -1,0 +1,204 @@
+🔥 Excellent. আজ আমরা production stability engineering এ ঢুকছি.
+
+আজকের topic না জানলে:
+
+একটা component crash
+পুরো app white screen 😵
+users leave
+debugging nightmare
+
+আজকের hero:
+
+🛡️ Error Boundaries
+✅ Phase-2 / Week 6 / Day-5
+🧠 Topic: Error Boundaries + Handling UI Failures Gracefully
+🎯 Today’s Goal
+
+আজকের শেষে তুমি বুঝবে:
+
+React app কেন পুরো crash হয়
+Error Boundary কী
+fallback UI show করা
+production debugging mindset
+where to place boundaries
+limitations
+1) 🧠 Problem: One Component Crash = Whole Tree Crash
+function BuggyComponent() {
+  throw new Error("Something broke");
+}
+
+Use:
+
+function App() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <BuggyComponent />
+    </div>
+  );
+}
+
+👉 Result:
+whole app UI crash ❌
+
+2) 🛡️ Error Boundary Concept
+
+Error boundary catches:
+
+render errors
+lifecycle errors
+child tree errors
+
+and shows:
+
+fallback UI instead of app crash
+
+3) 🚀 Basic Error Boundary
+
+Important:
+
+Error boundaries are class components
+
+import React from "react";
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    console.log("Error:", error);
+    console.log("Info:", info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <h2>Something went wrong 😢</h2>;
+    }
+
+    return this.props.children;
+  }
+}
+4) 🧩 Usage
+<ErrorBoundary>
+  <BuggyComponent />
+</ErrorBoundary>
+
+Now:
+👉 buggy component crash
+👉 fallback UI shown ✅
+👉 app alive 🚀
+
+5) 🎯 Best Placement Strategy
+✅ Page-level
+<ErrorBoundary>
+  <DashboardPage />
+</ErrorBoundary>
+✅ Widget-level
+<ErrorBoundary>
+  <AnalyticsChart />
+</ErrorBoundary>
+
+Best for dashboards.
+
+6) ⚠️ What It Does NOT Catch
+
+Error boundary does NOT catch:
+
+event handler errors
+async errors
+setTimeout
+API failures
+SSR errors
+
+Example:
+
+<button onClick={() => { throw new Error("fail") }}>
+
+❌ not caught
+
+Need try/catch
+
+7) 🛒 Real App Example
+Analytics Dashboard
+Chart crashes
+only chart fallback shown
+whole dashboard safe
+<ErrorBoundary>
+  <RevenueChart />
+</ErrorBoundary>
+
+This is real production architecture.
+
+8) 🔥 Reusable Fallback
+return (
+  <div>
+    <h2>Widget unavailable</h2>
+    <button onClick={() => window.location.reload()}>
+      Retry
+    </button>
+  </div>
+);
+
+Great UX.
+
+🧪 Practice Tasks (Mandatory)
+✅ Task 1
+
+create buggy component
+
+✅ Task 2
+
+wrap with boundary
+
+✅ Task 3
+
+make reusable widget fallback
+
+✅ Task 4
+
+test event handler error not caught
+
+🎯 Mini Project (Day 5)
+
+File:
+phase2-week6-day5-error-boundary.jsx
+
+Build:
+
+✅ Safe Dashboard
+chart widget
+profile widget
+buggy analytics widget
+boundary per widget
+fallback retry UI
+
+GitHub push:
+phase2/week6/day5
+
+🎤 Interview Questions
+what is error boundary?
+what errors does it catch?
+why class component?
+best placement strategy?
+what errors are NOT caught?
+🧠 Engineer Insight
+
+আজকের golden rule:
+
+Fail small, keep the app alive
+
+Senior frontend engineers always isolate failures.
+
+Tomorrow:
+
+🚀 Phase-2 / Week 6 / Day-6
+
+Custom Hooks + Reusable Logic Extraction
+
+এখানে scalable React architecture শুরু 🔥
