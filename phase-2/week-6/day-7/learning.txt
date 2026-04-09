@@ -1,0 +1,161 @@
+🔥 LET’S SHIP SOMETHING REAL.
+আজ Week 6 Project Day = Advanced React Performance + Architecture Integration
+
+এই project-এর goal শুধু UI বানানো না —
+engineering decisions + performance architecture + reusable hooks + failure isolation apply করা।
+
+✅ Phase-2 / Week 6 / Day-7
+🧠 Weekly Advanced Project: Optimized Ecommerce Dashboard
+
+আজ আমরা পুরো Week 6 use করবো:
+
+React.memo
+useMemo
+useCallback
+lazy
+Suspense
+Error Boundary
+Custom Hooks
+performance thinking
+🎯 Project Goal
+
+Build:
+
+🛒 Optimized Ecommerce Dashboard
+✨ Features
+✅ Product Grid
+100 fake products
+memoized cards
+search filter
+category filter
+sort by price
+✅ Cart Sidebar
+add/remove
+total calculation memoized
+lazy loaded sidebar
+✅ Analytics Widget
+total products
+cart count
+expensive summary
+error isolated
+✅ Reusable Hooks
+useCart
+useSearch
+useProducts
+🏗️ Suggested Architecture
+src/
+ ├── components/
+ │   ├── ProductGrid.jsx
+ │   ├── ProductCard.jsx
+ │   ├── SearchBar.jsx
+ │   ├── AnalyticsWidget.jsx
+ │   └── ErrorBoundary.jsx
+ │
+ ├── hooks/
+ │   ├── useCart.js
+ │   ├── useProducts.js
+ │   └── useSearch.js
+ │
+ ├── pages/
+ │   └── Dashboard.jsx
+1) 🪝 Custom Hook → useCart
+function useCart() {
+  const [cart, setCart] = useState([]);
+
+  const add = useCallback((product) => {
+    setCart((prev) => [...prev, product]);
+  }, []);
+
+  const remove = useCallback((id) => {
+    setCart((prev) => prev.filter((x) => x.id !== id));
+  }, []);
+
+  return { cart, add, remove };
+}
+2) 🔍 Search + Sort Memo
+const filteredProducts = useMemo(() => {
+  return products
+    .filter((p) =>
+      p.name.toLowerCase().includes(query.toLowerCase())
+    )
+    .sort((a, b) => a.price - b.price);
+}, [products, query]);
+3) 🧠 Memoized Product Card
+const ProductCard = React.memo(({ product, onAdd }) => {
+  console.log("Rendering:", product.name);
+
+  return (
+    <div>
+      <h3>{product.name}</h3>
+      <p>${product.price}</p>
+      <button onClick={() => onAdd(product)}>
+        Add
+      </button>
+    </div>
+  );
+});
+4) 🚀 Lazy Cart Sidebar
+const CartSidebar = lazy(() => import("./CartSidebar"));
+
+Use:
+
+<Suspense fallback={<p>Loading cart...</p>}>
+  <CartSidebar />
+</Suspense>
+5) 🛡️ Error Boundary Widget Isolation
+<ErrorBoundary>
+  <AnalyticsWidget cart={cart} />
+</ErrorBoundary>
+
+analytics crash হলেও dashboard alive থাকবে.
+
+6) 📊 Expensive Analytics Memo
+const analytics = useMemo(() => {
+  return {
+    totalProducts: products.length,
+    cartCount: cart.length,
+    totalValue: cart.reduce((sum, p) => sum + p.price, 0)
+  };
+}, [products, cart]);
+7) 🧠 Stable Callback Flow
+const handleAdd = useCallback((product) => {
+  add(product);
+}, [add]);
+
+memoized grid-এর জন্য important.
+
+🎯 Your Engineering Tasks
+✅ Must Implement
+100 fake products
+memo cards
+memoized filter
+stable add/remove callbacks
+lazy cart
+error boundary
+custom hooks
+analytics memo
+💼 GitHub Deliverable
+
+Push:
+
+phase2/week6/day7-optimized-ecommerce-dashboard
+🎤 Interview Questions
+where did you use React.memo and why?
+why useMemo on filters?
+why useCallback on add/remove?
+why lazy cart sidebar?
+why isolate analytics errors?
+🧠 Senior Engineer Insight
+
+আজকের strongest architecture rule:
+
+optimize data, functions, rendering, and failure boundaries separately
+
+এই separation mindset তোমাকে international frontend engineering standard-এ নিয়ে যাবে.
+
+🚀 NEXT PHASE PREVIEW
+Phase-2 / Week 7
+
+Routing + Protected Routes + Auth Architecture + Data Fetching
+
+এখানে full app architecture শুরু 🔥

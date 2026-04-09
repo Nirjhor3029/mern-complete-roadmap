@@ -1,0 +1,211 @@
+🔥 Excellent. আজ থেকে তুমি scalable React architecture zone-এ ঢুকছো.
+
+আজকের topic না জানলে codebase এ এই problem হবে:
+
+repeated logic everywhere
+copy paste hooks
+inconsistent behavior
+hard testing
+hard maintenance
+
+আজকের hero:
+
+🪝 Custom Hooks
+✅ Phase-2 / Week 6 / Day-6
+🧠 Topic: Custom Hooks + Reusable Logic Extraction
+🎯 Today’s Goal
+
+আজকের শেষে তুমি বুঝবে:
+
+custom hook কী
+কেন লাগে
+stateful logic reuse
+API fetching hook
+form hook
+separation of concerns
+scalable architecture pattern
+1) 🧠 Why Custom Hooks?
+
+ধরো ৫ জায়গায় same logic আছে:
+
+const [count, setCount] = useState(0);
+
+function increment() {
+  setCount((prev) => prev + 1);
+}
+
+copy paste ❌
+
+Instead:
+
+extract reusable stateful logic
+
+2) 🚀 First Custom Hook
+
+Rule:
+
+custom hook name must start with use
+
+import { useState } from "react";
+
+function useCounter(initial = 0) {
+  const [count, setCount] = useState(initial);
+
+  const increment = () => setCount((prev) => prev + 1);
+  const decrement = () => setCount((prev) => prev - 1);
+  const reset = () => setCount(initial);
+
+  return { count, increment, decrement, reset };
+}
+
+Use:
+
+function App() {
+  const { count, increment } = useCounter(5);
+
+  return <button onClick={increment}>{count}</button>;
+}
+3) 🧠 Mental Model
+
+Custom hook =
+
+logic reuse, not UI reuse
+
+UI reuse = components
+logic reuse = hooks
+
+4) 🌐 Real Example: useFetch
+import { useEffect, useState } from "react";
+
+function useFetch(url) {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => {
+        setData(json);
+        setLoading(false);
+      });
+  }, [url]);
+
+  return { data, loading };
+}
+
+Use:
+
+const { data, loading } = useFetch("/api/products");
+
+🔥 Massive reuse power.
+
+5) 🧾 Form Hook Example
+function useInput(initial = "") {
+  const [value, setValue] = useState(initial);
+
+  const onChange = (e) => setValue(e.target.value);
+
+  return { value, onChange, setValue };
+}
+
+Use:
+
+const name = useInput("");
+
+<input value={name.value} onChange={name.onChange} />
+6) 🛒 Ecommerce Real Hook
+function useCart() {
+  const [items, setItems] = useState([]);
+
+  const add = (product) =>
+    setItems((prev) => [...prev, product]);
+
+  const remove = (id) =>
+    setItems((prev) => prev.filter((x) => x.id !== id));
+
+  return { items, add, remove };
+}
+
+এটা real production pattern 🚀
+
+7) ⚠️ Common Mistakes
+❌ calling hooks conditionally
+if (show) {
+  useCounter();
+}
+
+Never ❌
+
+❌ UI inside hook
+function useCard() {
+  return <div>Hello</div>;
+}
+
+hook UI return করবে না ❌
+
+8) 🧠 Architecture Rule
+
+Custom hooks folder:
+
+hooks/
+  useCounter.js
+  useFetch.js
+  useCart.js
+  useDebounce.js
+
+Scalable team-friendly structure.
+
+🧪 Practice Tasks (Mandatory)
+✅ Task 1
+
+build useCounter
+
+✅ Task 2
+
+build useInput
+
+✅ Task 3
+
+build useFetch
+
+✅ Task 4
+
+build useCart
+
+🎯 Mini Project (Day 6)
+
+File:
+phase2-week6-day6-custom-hooks.jsx
+
+Build:
+
+✅ Product Dashboard
+useFetch products
+useCart
+useSearchInput
+reusable hooks folder
+
+GitHub push:
+phase2/week6/day6
+
+🎤 Interview Questions
+custom hook vs component?
+why start with use?
+what problems do hooks solve?
+can hooks return JSX?
+common scaling patterns?
+🧠 Engineer Insight
+
+আজকের golden rule:
+
+extract repeated stateful logic into hooks
+
+এইটা large codebase maintainability-এর backbone.
+
+Tomorrow:
+
+🚀 Phase-2 / Week 6 / Day-7
+
+Weekly Advanced React Project → Optimized Ecommerce Dashboard
+
+এখানে পুরো week apply করবো 🔥
